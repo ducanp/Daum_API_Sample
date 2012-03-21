@@ -1,0 +1,94 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title> Get Request Token</title>
+	<script type="text/javascript" src="js/sha1.js"></script>
+	<script type="text/javascript" src="js/oauth.js"></script>
+	<script type="text/javascript" src="js/CommonAJAXLibrary.js"></script>
+	<script type="text/javascript" >
+	
+		function getRequestToken() {
+			
+			var message = {
+				action: "https://apis.daum.net/oauth/requestToken",
+				method: "GET",
+				parameters: {
+					oauth_consumer_key: "5f5c42c5-7e58-473e-89d3-136de55ab566",
+					oauth_signature_method: "HMAC-SHA1",
+					oauth_callback: "http://cafe.daum.net/daumdna"
+				}
+			};
+
+			OAuth.setTimestampAndNonce(message);
+			OAuth.SignatureMethod.sign(message, {
+				consumerSecret: "tGfNUzLiptK5numYbvUaaABDHAfIzfAApZL-Po4-ztxonNJRPlf6Lg00",
+				tokenSecret : ""
+				});
+			
+			var params = [];
+
+			for(var name in message.parameters) {
+				params.push(name + "=" + 
+				encodeURIComponent(message.parameters[name]));
+
+				//http://apis.daum.net/oauth/requestToeken?name=value&name=value
+			}
+
+			var url = message.action + "?" + params.join("&");
+
+			document.getElementById("requestURL").innerHTML = "Request Token 요청한 URL <br/>" + url;
+			getRequestTokenAJAX(url);
+		}
+		
+		//리퀘스트 토큰 요청 AJAX
+		function getRequestTokenAJAX(url){			
+		  	var xmlHttpObj; 
+		    xmlHttpObj = CreateXmlHttpRequestObject();
+		
+		    if(xmlHttpObj) 
+		    { 
+		      xmlHttpObj.open("GET", url, true);
+		      xmlHttpObj.onreadystatechange = function() 
+		      { 
+		        if(xmlHttpObj.readyState == READYSTATE_COMPLETE) 
+		        { 
+		        	var result = xmlHttpObj.responseText;
+		       	    if(result.length > 0){
+		       	    	document.getElementById("request-result").innerHTML = "받아온 Request Token 정보 <br/>" + result;
+		       	    	var temp = "oauth_token=";
+		       	    	result = result.split("&", 1);
+		       	    	result = result.toString().substring(temp.length, result.toString().length);
+		       	    	
+		       	    	document.getElementById("request-token").value = result;
+		       	    	
+		       	    	return true;
+		       		};
+		        };
+		      }
+		      xmlHttpObj.send(null); 
+		    };
+		}
+		
+		//계정인증
+		function getAuthrized() {
+			
+			var url = "https://apis.daum.net/oauth/authorize";
+			url = url + "?oauth_token=" + 
+			document.getElementById("request-token").value;
+
+			window.location = url;
+
+		}
+	</script>		
+
+</head>
+<body>
+	<button onclick="getRequestToken()"> Get Request Token </button>
+	<div id="requestURL" style="width:100%"></div>
+	<hr size="2" align="center" width="100%">
+	<div id="request-result"></div>
+	<span>Token</span><input id="request-token" type="text"/>
+	<button onclick="getAuthrized()"> Get Authorized </button>
+	<hr size="2" align="center" width="100%">
+</body>
+</html>
