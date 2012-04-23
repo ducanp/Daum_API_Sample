@@ -74,7 +74,10 @@ public class KMLViewerActivity extends Activity {
 	 * */
 	public void drawPolyLine(ArrayList<CoordinatesData> coordinatesData){
 		try {
-			if(coordinatesData == null) return;
+			if(coordinatesData == null){
+				Toast.makeText(this, "데이터를 가져오지 못했습니다.\nURL을 확인해 주세요.", Toast.LENGTH_SHORT).show();
+				return;
+			}
 			
 			//맵에 있는 PolyLine 제거
 			mapView.removeAllPolylines();
