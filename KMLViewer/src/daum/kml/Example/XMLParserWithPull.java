@@ -22,13 +22,13 @@ public class XMLParserWithPull {
 	    	ArrayList<CoordinatesData> coordinatesData = new ArrayList<CoordinatesData>();
 	    	int parserEvent = parser.getEventType();
 	        String tag = "";
-	        boolean inTitle = false;
+	        boolean isTitle = false;
 			
 			while (parserEvent != XmlPullParser.END_DOCUMENT ){
 				switch (parserEvent) {
 	
 				case XmlPullParser.TEXT:
-					if (inTitle) {
+					if (isTitle) {
 						if (tag.equals("coordinates")) {
 							//좌표셋은 콤마(",")로 구분 되어 있어서 나누어 저장한다
 							String lnglat[] =  parser.getText().replaceAll("\n", ",").replaceAll("\\p{Space}", ",").split(",");
@@ -53,14 +53,14 @@ public class XMLParserWithPull {
 				case XmlPullParser.START_TAG:
 					tag = parser.getName();
 					if (tag.equals("coordinates")) {
-						inTitle = true;
+						isTitle = true;
 					}
 					break;
 					
 				case XmlPullParser.END_TAG:
 					tag = parser.getName();
 					if (tag.equals("coordinates")) {
-						inTitle = false;
+						isTitle = false;
 					}
 					break;
 					
