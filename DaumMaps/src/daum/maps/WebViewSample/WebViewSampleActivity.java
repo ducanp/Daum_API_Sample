@@ -1,11 +1,11 @@
-package daum.maps.Example;
+package daum.maps.WebViewSample;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class DaumMapsActivity extends Activity {
+public class WebViewSampleActivity extends Activity {
 	private WebView webView;
 	  
     /** Called when the activity is first created. */
