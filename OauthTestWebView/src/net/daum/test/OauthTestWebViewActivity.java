@@ -15,10 +15,8 @@ public class OauthTestWebViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        URL = "file:///android_asset/www/TESTOAUTH/index.html";
-        //URL = "file:///android_asset/www/TESTOAUTH/requestor.html";
-        //URL = "file:///android_asset/www/TESTOAUTH/authorized.html";
-        //URL = "file:///android_asset/www/TESTOAUTH/accessToken.html";
+        URL = "file:///android_asset/www/TESTOAUTH/cafe.html";
+        //URL = "file:///android_asset/www/TESTOAUTH/yozm.html";
                 
 	    webView = (WebView) findViewById(R.id.webview);
 	    webView.getSettings().setJavaScriptEnabled(true);
